@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WS1 : MonoBehaviour
 {
@@ -6,12 +7,17 @@ public class WS1 : MonoBehaviour
 
     private int rand;
     [SerializeField] GameObject objectToInstantiate;
+
+    [SerializeField] UnityEvent onStart;
+
+    private float timer = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rand = Random.Range(0, 10);
         print(rand);
+        onStart.Invoke();
 
         for (int i = 0; i < rand; i++)
         {
@@ -23,6 +29,8 @@ public class WS1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+        Debug.Log(timer);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Yspeed();
