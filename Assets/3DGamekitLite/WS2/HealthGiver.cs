@@ -15,30 +15,9 @@ public class HealthGiver : MonoBehaviour
 
     private int rand;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        if (letsGamble)
-        {
-            if (rand >= 0 || rand <= 5)
-            {
-                healthAmount = 1;
-                thisMesh.material.color = Color.gold;
-            }
-            else if (rand >= 6 || rand <= 10)
-            {
-                healthAmount = 2;
-                thisMesh.material.color = Color.indianRed;
-            } else if (rand >= 11 || rand <= 13)
-            {
-                healthAmount = 3;
-                thisMesh.material.color = Color.chocolate;
-            } else if (rand == 14)
-            {
-                resetDamage = true;
-                thisMesh.material.color = Color.red;
-            }
-        }
-        
+        SetHealth(letsGamble, healthAmount, resetDamage);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -65,6 +44,33 @@ public class HealthGiver : MonoBehaviour
         healthAmount = health;
         letsGamble = gambling;
         resetDamage = reset;
+
+        if (letsGamble)
+        {
+            Randomize();
+        }
+    }
+
+    void Randomize()
+    {
         rand = Random.Range(0, 15);
+        if (rand >= 0 || rand <= 5)
+        {
+            healthAmount = 1;
+            thisMesh.material.color = Color.gold;
+        }
+        else if (rand >= 6 || rand <= 10)
+        {
+            healthAmount = 2;
+            thisMesh.material.color = Color.indianRed;
+        } else if (rand >= 11 || rand <= 13)
+        {
+            healthAmount = 3;
+            thisMesh.material.color = Color.chocolate;
+        } else if (rand == 14)
+        {
+            resetDamage = true;
+            thisMesh.material.color = Color.red;
+        }
     }
 }

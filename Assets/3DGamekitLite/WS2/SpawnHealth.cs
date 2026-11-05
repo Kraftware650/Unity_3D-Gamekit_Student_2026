@@ -15,9 +15,9 @@ public class SpawnHealth : MonoBehaviour
 
     public void HealthSpawn()
     {
+        Instantiate(healthPickup, new Vector3(transform.position.x,transform.position.y*2,transform.position.z), transform.rotation);
         HealthGiver hgi = healthPickup.GetComponentInChildren<HealthGiver>();
         hgi.SetHealth(letsGamble, healthAmount, resetDamage);
-        Instantiate(healthPickup, new Vector3(transform.position.x,transform.position.y*2,transform.position.z), transform.rotation);
     }
     
 
