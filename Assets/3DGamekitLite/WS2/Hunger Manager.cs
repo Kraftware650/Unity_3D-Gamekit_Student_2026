@@ -41,5 +41,10 @@ public class HungerManager : MonoBehaviour
         
         damageable.ApplyDamage(hungerDamage);
     }
+    
+    public void ResetTimer()
+    {
+        timer = 0;
+    }
 }
 

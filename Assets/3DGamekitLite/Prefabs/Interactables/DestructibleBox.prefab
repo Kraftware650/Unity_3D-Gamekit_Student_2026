@@ -11887,6 +11887,7 @@ GameObject:
   - component: {fileID: 114157936046045886}
   - component: {fileID: 64170521529424344}
   - component: {fileID: 54171921546205050}
+  - component: {fileID: 8306328982321629863}
   m_Layer: 23
   m_Name: DestructibleBox
   m_TagString: Untagged
@@ -12035,6 +12036,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8306328982321629863}
+        m_TargetAssemblyTypeName: SpawnHealth, Assembly-CSharp
+        m_MethodName: HealthSpawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnReceiveDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -12097,6 +12110,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8306328982321629863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811652608955626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e82e3727daaf48409c2f4f490e47983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnHealth
+  healthPickup: {fileID: 8831773590856336718, guid: cd85f95895e1f8d4aa33321c01dd1c61,
+    type: 3}
+  letsGamble: 1
+  resetDamage: 0
+  healthAmount: 1
 --- !u!1 &1889811734103110
 GameObject:
   m_ObjectHideFlags: 0
