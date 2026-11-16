@@ -6,6 +6,8 @@ TagManager:
   tags:
   - FlythroughCam
   - HealthPickup
+  - NoHunger
+  - MoreHunger
   layers:
   - Default
   - TransparentFX

@@ -5,25 +5,58 @@ using Gamekit3D;
 
 public class HungerManager : MonoBehaviour
 {
-    [SerializeField] float hungerTime = 10f;
+    [SerializeField] private float standardHungerTime = 10f;
+    [SerializeField] private float extraHungerTime = 5f;
     private float timer = 0f;
+    private float hungerTime;
+    [SerializeField] bool hungerEnabled = true;
     Damageable damageable;
 
     private void Start()
     {
         damageable = gameObject.GetComponent<Damageable>();
+        hungerTime = standardHungerTime;
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("MoreHunger"))
+        {
+            hungerTime = extraHungerTime;
+        }
+
+        if (other.CompareTag("NoHunger"))
+        {
+            hungerEnabled = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("MoreHunger"))
+        {
+            hungerTime = standardHungerTime;
+        }
+        
+        if (other.CompareTag("NoHunger"))
+        {
+            hungerEnabled = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-         timer += Time.deltaTime;
+        if (hungerEnabled)
+        {
+            timer += Time.deltaTime;
+        }
         
-         if (timer >= hungerTime)
-         {
-             DealDamage();
-             timer = 0;
-         }
+        if (timer >= hungerTime)
+        {
+            DealDamage();
+            timer = 0;
+        }
     }
 
     void DealDamage()
@@ -46,5 +79,7 @@ public class HungerManager : MonoBehaviour
     {
         timer = 0;
     }
+
+    
 }
 

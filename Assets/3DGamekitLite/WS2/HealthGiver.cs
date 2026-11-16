@@ -41,33 +41,37 @@ public class HealthGiver : MonoBehaviour
 
     public void SetHealth(bool gambling, int health, bool reset)
     {
-        healthAmount = health;
+        
         letsGamble = gambling;
-        resetDamage = reset;
-
+        
         if (letsGamble)
         {
             Randomize();
+        }
+        else
+        {
+            resetDamage = reset;
+            healthAmount = health;
         }
     }
 
     void Randomize()
     {
-        rand = Random.Range(0, 15);
-        if (rand >= 0 || rand <= 5)
+        rand = Random.Range(0, 4);
+        if (rand == 0)
         {
             healthAmount = 1;
             thisMesh.material.color = Color.gold;
         }
-        else if (rand >= 6 || rand <= 10)
+        else if (rand == 1)
         {
             healthAmount = 2;
             thisMesh.material.color = Color.indianRed;
-        } else if (rand >= 11 || rand <= 13)
+        } else if (rand == 2)
         {
             healthAmount = 3;
             thisMesh.material.color = Color.chocolate;
-        } else if (rand == 14)
+        } else if (rand == 3)
         {
             resetDamage = true;
             thisMesh.material.color = Color.red;
