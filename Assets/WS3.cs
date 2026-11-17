@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class WS3 : MonoBehaviour
 {
-    [SerializeField] private float timer = 5f;
     [SerializeField] private bool singleUse;
     [SerializeField] EventReference eventReference;
     [SerializeField] private bool play;
@@ -24,7 +23,6 @@ public class WS3 : MonoBehaviour
     void Start()
     {
         eventInstance = RuntimeManager.CreateInstance(eventReference);
-        eventInstance.start();
     }
 
 
@@ -43,6 +41,11 @@ public class WS3 : MonoBehaviour
         if (setParameter)
         {
             eventInstance.setParameterByName(parameterName, parameterValue);
+        }
+
+        if (singleUse)
+        {
+            Destroy(this);
         }
     }
 

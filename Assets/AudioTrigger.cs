@@ -2,42 +2,64 @@ using System;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using UnityEngine.Events;
 
 public class AudioTrigger : MonoBehaviour
 {
-    [SerializeField] private EventReference eventRef;
+    [Header("The trigger can either be used in an existing unityEvent...")]
+    [Tooltip("Destroys the trigger after use")]
     [SerializeField] private bool singleUse;
+    [Header("...or by connecting it to a trigger and using the built in unityEvents below")]
+    [SerializeField] UnityEvent onTriggerEnter;
+    [SerializeField] UnityEvent onTriggerExit;
 
     private EventInstance eventInstance;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    private void OnTriggerEnter(Collider other)
     {
-        eventInstance = RuntimeManager.CreateInstance("eventInstance");
+        onTriggerEnter.Invoke();
+        if (singleUse && onTriggerEnter != null)
+        {
+            Destroy(this);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
+    {
+        onTriggerExit.Invoke();
+        if (singleUse && onTriggerExit != null)
+        {
+            Destroy(this);
+        }
+    }
+
+    public void EventToImpact(string eventName)
     {
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void Play()
     {
-        throw new NotImplementedException();
+
     }
 
-    void Play()
+    public void Stop()
     {
-        eventInstance.start();
+        
     }
 
-    void Stop()
+    public void StopImmediate()
     {
-        eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        
+    }
+    
+    public void ParameterToImpact(string parameterName)
+    {
+        
     }
 
-    void StopImmediate()
+    public void SetParameterValue(float value)
     {
-        eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        
     }
 }
