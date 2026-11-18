@@ -8,6 +8,7 @@ TagManager:
   - HealthPickup
   - NoHunger
   - MoreHunger
+  - AudioManager
   layers:
   - Default
   - TransparentFX

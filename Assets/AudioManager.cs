@@ -4,17 +4,17 @@ using FMODUnity;
 using FMOD.Studio;
 using NUnit.Framework;
 
-[System.Serializable]
-public struct MusicEvents
+public enum AudioType
 {
-    public string eventName;
-    public EventReference eventReference;
+    music,
+    sound
 }
 
 [System.Serializable]
-public struct SoundEvents
+public struct AudioEvents
 {
     public string eventName;
+    public AudioType audioType;
     public EventReference eventReference;
 }
 
@@ -27,52 +27,93 @@ public struct EventInstances
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private string eventName;
-    [SerializeField] private MusicEvents[] musicEvents;
-    [SerializeField] private SoundEvents[] soundEvents;
-    List<EventInstances> activeEvents = new List<EventInstances>();
+    [HideInInspector] public string eventName;
+    [HideInInspector] public bool allowFadeOut;
+    [HideInInspector] public string parameterName;
+    [HideInInspector] public float parameterValue;
+    [SerializeField] private AudioEvents[] audioEvents;
+    private List<EventInstances> activeEvents = new List<EventInstances>();
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        
-        Play();
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    private void Play()
-    {
-        foreach (MusicEvents musicEvent in musicEvents)
-        {
-            if (musicEvent.eventName == eventName)
-            {
-                EventInstance eventInstance = RuntimeManager.CreateInstance(musicEvent.eventReference);
-                var ei = new EventInstances();
-                ei.eventName = musicEvent.eventName;
-                ei.eventInstance = eventInstance;
-                activeEvents.Add(ei);
-                eventInstance.start();
-                eventInstance.release();
-            } 
-        }
-    }
-
-    private void Stop()
+    public void Play()
     {
         foreach (EventInstances activeEvent in activeEvents)
         {
             if (activeEvent.eventName == eventName)
             {
-                activeEvent.eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                return;
+            }
+        }
+        
+        foreach (AudioEvents audioEvent in audioEvents)
+        {
+            if (audioEvent.eventName == eventName)
+            {
+                EventInstance eventInstance = RuntimeManager.CreateInstance(audioEvent.eventReference);
+                eventInstance.start();
+                if (audioEvent.audioType == AudioType.sound)
+                {
+                    eventInstance.release();
+                }
+                var ei = new EventInstances();
+                ei.eventName = audioEvent.eventName;
+                ei.eventInstance = eventInstance;
+                activeEvents.Add(ei);
+                
+            } 
+        }
+    }
+
+    public void Stop()
+    {
+        foreach (EventInstances activeEvent in activeEvents)
+        {
+            if (activeEvent.eventName == eventName)
+            {
+                if (allowFadeOut)
+                {
+                    activeEvent.eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                }
+                else
+                {
+                    activeEvent.eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                }
                 activeEvent.eventInstance.release();
             }
         }
     }
 
-    private void SetParameter(string eventName,string parameterName, float value)
+    public void SetParameter(string eventName,string parameterName, float value)
     {
-        
+        foreach (EventInstances activeEvent in activeEvents) 
+        {
+            if (activeEvent.eventName == eventName)
+            {
+                activeEvent.eventInstance.setParameterByName(parameterName, value);
+            }
+        }
     }
-    
+
+    public void CombatEnter()
+    {
+        foreach (EventInstances activeEvent in activeEvents)
+        {
+            activeEvent.eventInstance.setParameterByName("Combat", 1);
+        }
+    }
+
+    public void CombatExit()
+    {
+        foreach (EventInstances activeEvent in activeEvents)
+        {
+            
+            activeEvent.eventInstance.setParameterByName("Combat", 0);
+        }
+    }
     
 }

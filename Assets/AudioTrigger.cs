@@ -4,62 +4,71 @@ using FMODUnity;
 using FMOD.Studio;
 using UnityEngine.Events;
 
+[System.Serializable]
+public struct audioTrigger
+{
+    public string eventName;
+    public string parameterName;
+    public UnityEvent onTriggerEnter;
+    public UnityEvent onTriggerExit;
+}
 public class AudioTrigger : MonoBehaviour
 {
     [Header("The trigger can either be used in an existing unityEvent...")]
     [Tooltip("Destroys the trigger after use")]
     [SerializeField] private bool singleUse;
     [Header("...or by connecting it to a trigger and using the built in unityEvents below")]
-    [SerializeField] UnityEvent onTriggerEnter;
-    [SerializeField] UnityEvent onTriggerExit;
+    [SerializeField] audioTrigger[] audioTriggers;
+    private AudioManager audioManager;
 
-    private EventInstance eventInstance;
-    
+    private void Awake()
+    {
+        GameObject audioManagerGO = GameObject.FindWithTag("AudioManager");
+        audioManager = audioManagerGO.GetComponent<AudioManager>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        onTriggerEnter.Invoke();
-        if (singleUse && onTriggerEnter != null)
+        foreach (audioTrigger audioTrigger in audioTriggers)
         {
-            Destroy(this);
+            audioManager.eventName = audioTrigger.eventName;
+            audioManager.parameterName = audioTrigger.eventName;
+            audioTrigger.onTriggerEnter.Invoke();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        onTriggerExit.Invoke();
-        if (singleUse && onTriggerExit != null)
+        foreach (audioTrigger audioTrigger in audioTriggers)
+        {
+            audioTrigger.onTriggerExit.Invoke();
+        }
+        if (singleUse)
         {
             Destroy(this);
         }
     }
-
-    public void EventToImpact(string eventName)
-    {
-        
-    }
-
+    
     public void Play()
     {
-
+        audioManager.Play();
     }
 
     public void Stop()
     {
-        
+        audioManager.allowFadeOut = true;
+        audioManager.Stop();
     }
 
     public void StopImmediate()
     {
-        
-    }
-    
-    public void ParameterToImpact(string parameterName)
-    {
-        
+        audioManager.allowFadeOut = false;
+        audioManager.Stop();
     }
 
     public void SetParameterValue(float value)
     {
-        
+        audioManager.parameterValue = value;
+        audioManager.SetParameter(audioManager.eventName, audioManager.parameterName, audioManager.parameterValue);
     }
 }

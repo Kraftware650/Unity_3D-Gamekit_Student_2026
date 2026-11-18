@@ -1,5 +1,6 @@
 ﻿using Gamekit3D.Message;
 using UnityEngine;
+using Debug = FMOD.Debug;
 
 namespace Gamekit3D
 {
@@ -56,6 +57,7 @@ namespace Gamekit3D
             m_Controller.animator.Play(hashIdleState, 0, Random.value);
 
             SceneLinkedSMB<ChomperBehavior>.Initialise(m_Controller.animator, this);
+            
         }
 
         /// <summary>
@@ -111,6 +113,7 @@ namespace Gamekit3D
                     TargetDistributor distributor = target.GetComponentInChildren<TargetDistributor>();
                     if (distributor != null)
                         m_FollowerInstance = distributor.RegisterNewFollower();
+                    
                 }
             }
             else
@@ -148,13 +151,13 @@ namespace Gamekit3D
                         if (distributor != null)
                             m_FollowerInstance = distributor.RegisterNewFollower();
                     }
-
+                    
                     m_TimerSinceLostTarget = 0.0f;
                 }
             }
         }
 
-        public void StartPursuit()
+        public void StartPursuit() 
         {
             if (m_FollowerInstance != null)
             {
@@ -165,7 +168,7 @@ namespace Gamekit3D
             m_Controller.animator.SetBool(hashInPursuit, true);
         }
 
-        public void StopPursuit()
+        public void StopPursuit() 
         {
             if (m_FollowerInstance != null)
             {
