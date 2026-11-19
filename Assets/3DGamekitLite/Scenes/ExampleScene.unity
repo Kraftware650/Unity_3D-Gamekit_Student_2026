@@ -153561,6 +153561,11 @@ PrefabInstance:
       propertyPath: playerScanner.detectionRadius
       value: 9.04
       objectReference: {fileID: 0}
+    - target: {fileID: 1323637240865996010, guid: e9569c7e13e51264082910415a120d38,
+        type: 3}
+      propertyPath: audioTriggers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
