@@ -39,14 +39,6 @@ namespace Gamekit3D
         protected float arcDegree;
 
         protected List<TargetFollower> m_Followers;
-        
-        private AudioManager audioManager;
-
-        private void Awake()
-        {
-            GameObject audioManagerGO = GameObject.FindWithTag("AudioManager");
-            audioManager = audioManagerGO.GetComponent<AudioManager>();
-        }
 
         public void OnEnable()
         {
@@ -68,7 +60,6 @@ namespace Gamekit3D
 
         public TargetFollower RegisterNewFollower()
         {
-            audioManager.CombatEnter();
             TargetFollower follower = new TargetFollower(this);
             m_Followers.Add(follower);
             return follower;
@@ -76,7 +67,6 @@ namespace Gamekit3D
 
         public void UnregisterFollower(TargetFollower follower)
         {
-            audioManager.CombatExit();
             if (follower.assignedSlot != -1)
             {
                 m_FreeArcs[follower.assignedSlot] = true;

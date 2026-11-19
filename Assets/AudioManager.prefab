@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6017725169145607752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8981118838476703435}
+  - component: {fileID: 3295106045921741108}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: AudioManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8981118838476703435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6017725169145607752}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -20.91564, y: 0.11353, z: -28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3295106045921741108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6017725169145607752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99d98de67cd8e524eac676b7f8a214ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  eventName: First Area
+  allowFadeOut: 0
+  parameterName: 
+  parameterValue: 0
+  enemiesTargetingPlayer: 0
+  audioEvents:
+  - eventName: Zone1
+    audioType: 0
+    eventReference:
+      Guid:
+        Data1: 1711084008
+        Data2: 1115924472
+        Data3: -1216450125
+        Data4: -912883005
+      Path: event:/Intro Area
+  - eventName: Zone2
+    audioType: 0
+    eventReference:
+      Guid:
+        Data1: -2003248239
+        Data2: 1206434260
+        Data3: 251523233
+        Data4: -1750487878
+      Path: event:/Key Areas
+  - eventName: Boss
+    audioType: 0
+    eventReference:
+      Guid:
+        Data1: 1326741291
+        Data2: 1108718940
+        Data3: -388744515
+        Data4: -2038762248
+      Path: event:/Boss
+  - eventName: Game Over
+    audioType: 0
+    eventReference:
+      Guid:
+        Data1: 237205044
+        Data2: 1086111607
+        Data3: 2105059475
+        Data4: -931452304
+      Path: event:/Game Over Stinger

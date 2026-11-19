@@ -5,7 +5,7 @@ using FMOD.Studio;
 using UnityEngine.Events;
 
 [System.Serializable]
-public struct audioTrigger
+public struct AudioTriggerStruct
 {
     public string eventName;
     public string parameterName;
@@ -18,7 +18,7 @@ public class AudioTrigger : MonoBehaviour
     [Tooltip("Destroys the trigger after use")]
     [SerializeField] private bool singleUse;
     [Header("...or by connecting it to a trigger and using the built in unityEvents below")]
-    [SerializeField] audioTrigger[] audioTriggers;
+    [SerializeField] AudioTriggerStruct[] audioTriggers;
     private AudioManager audioManager;
 
     private void Awake()
@@ -29,7 +29,7 @@ public class AudioTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        foreach (audioTrigger audioTrigger in audioTriggers)
+        foreach (AudioTriggerStruct audioTrigger in audioTriggers)
         {
             audioManager.eventName = audioTrigger.eventName;
             audioManager.parameterName = audioTrigger.eventName;
@@ -39,7 +39,7 @@ public class AudioTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        foreach (audioTrigger audioTrigger in audioTriggers)
+        foreach (AudioTriggerStruct audioTrigger in audioTriggers)
         {
             audioTrigger.onTriggerExit.Invoke();
         }
@@ -70,5 +70,15 @@ public class AudioTrigger : MonoBehaviour
     {
         audioManager.parameterValue = value;
         audioManager.SetParameter(audioManager.eventName, audioManager.parameterName, audioManager.parameterValue);
+    }
+    
+    public void CombatEnter()
+    {
+        audioManager.CombatEnter();
+    }
+
+    public void CombatExit()
+    {
+        audioManager.CombatExit();
     }
 }

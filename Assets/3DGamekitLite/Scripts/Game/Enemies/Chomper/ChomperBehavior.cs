@@ -85,7 +85,9 @@ namespace Gamekit3D
         protected void OnDisable()
         {
             if (m_FollowerInstance != null)
+            {
                 m_FollowerInstance.distributor.UnregisterFollower(m_FollowerInstance);
+            }
         }
 
         private void FixedUpdate()
@@ -100,6 +102,7 @@ namespace Gamekit3D
 
         public void FindTarget()
         {
+            
             //we ignore height difference if the target was already seen
             PlayerController target = playerScanner.Detect(transform, m_Target == null);
 
@@ -113,7 +116,6 @@ namespace Gamekit3D
                     TargetDistributor distributor = target.GetComponentInChildren<TargetDistributor>();
                     if (distributor != null)
                         m_FollowerInstance = distributor.RegisterNewFollower();
-                    
                 }
             }
             else
@@ -123,7 +125,7 @@ namespace Gamekit3D
                 if (target == null)
                 {
                     m_TimerSinceLostTarget += Time.deltaTime;
-
+                    
                     if (m_TimerSinceLostTarget >= timeToStopPursuit)
                     {
                         Vector3 toTarget = m_Target.transform.position - transform.position;
@@ -131,7 +133,9 @@ namespace Gamekit3D
                         if (toTarget.sqrMagnitude > playerScanner.detectionRadius * playerScanner.detectionRadius)
                         {
                             if (m_FollowerInstance != null)
+                            {
                                 m_FollowerInstance.distributor.UnregisterFollower(m_FollowerInstance);
+                            }
 
                             //the target move out of range, reset the target
                             m_Target = null;
@@ -143,13 +147,21 @@ namespace Gamekit3D
                     if (target != m_Target)
                     {
                         if (m_FollowerInstance != null)
+                        {
                             m_FollowerInstance.distributor.UnregisterFollower(m_FollowerInstance);
+                            
+                        }
+                            
 
                         m_Target = target;
 
                         TargetDistributor distributor = target.GetComponentInChildren<TargetDistributor>();
                         if (distributor != null)
+                        {
+
                             m_FollowerInstance = distributor.RegisterNewFollower();
+                        }
+                            
                     }
                     
                     m_TimerSinceLostTarget = 0.0f;
@@ -188,8 +200,12 @@ namespace Gamekit3D
 
         public void WalkBackToBase()
         {
+            
             if (m_FollowerInstance != null)
+            {
                 m_FollowerInstance.distributor.UnregisterFollower(m_FollowerInstance);
+            }
+
             m_Target = null;
             StopPursuit();
             m_Controller.SetTarget(originalPosition);

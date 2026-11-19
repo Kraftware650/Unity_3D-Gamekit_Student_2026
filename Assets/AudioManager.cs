@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
@@ -31,6 +32,9 @@ public class AudioManager : MonoBehaviour
     [HideInInspector] public bool allowFadeOut;
     [HideInInspector] public string parameterName;
     [HideInInspector] public float parameterValue;
+
+    [HideInInspector] public int enemiesTargetingPlayer = 0;
+    
     [SerializeField] private AudioEvents[] audioEvents;
     private List<EventInstances> activeEvents = new List<EventInstances>();
     
@@ -101,18 +105,14 @@ public class AudioManager : MonoBehaviour
 
     public void CombatEnter()
     {
-        foreach (EventInstances activeEvent in activeEvents)
-        {
-            activeEvent.eventInstance.setParameterByName("Combat", 1);
-        }
+        RuntimeManager.StudioSystem.setParameterByName("Combat", 1);
     }
 
     public void CombatExit()
     {
-        foreach (EventInstances activeEvent in activeEvents)
+        if (enemiesTargetingPlayer < 1)
         {
-            
-            activeEvent.eventInstance.setParameterByName("Combat", 0);
+            RuntimeManager.StudioSystem.setParameterByName("Combat", 0);
         }
     }
     
