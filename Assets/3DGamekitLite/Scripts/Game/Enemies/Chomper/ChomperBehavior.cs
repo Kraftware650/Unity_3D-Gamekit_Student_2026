@@ -45,6 +45,14 @@ namespace Gamekit3D
         protected PlayerController m_Target = null;
         protected EnemyController m_Controller;
         protected TargetDistributor.TargetFollower m_FollowerInstance = null;
+        
+        private AudioManager audioManager;
+
+        private void Awake()
+        {
+            GameObject audioManagerGO = GameObject.FindWithTag("AudioManager");
+            audioManager = audioManagerGO.GetComponent<AudioManager>();
+        }
 
         protected void OnEnable()
         {
@@ -111,6 +119,7 @@ namespace Gamekit3D
                 //we just saw the player for the first time, pick an empty spot to target around them
                 if (target != null)
                 {
+                    audioManager.CombatEnter();
                     m_Controller.animator.SetTrigger(hashSpotted);
                     m_Target = target;
                     TargetDistributor distributor = target.GetComponentInChildren<TargetDistributor>();
@@ -206,6 +215,7 @@ namespace Gamekit3D
                 m_FollowerInstance.distributor.UnregisterFollower(m_FollowerInstance);
             }
 
+            audioManager.CombatExit();
             m_Target = null;
             StopPursuit();
             m_Controller.SetTarget(originalPosition);

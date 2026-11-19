@@ -105,14 +105,24 @@ public class AudioManager : MonoBehaviour
 
     public void CombatEnter()
     {
-        RuntimeManager.StudioSystem.setParameterByName("Combat", 1);
+        enemiesTargetingPlayer++;
+        foreach (EventInstances activeEvent in activeEvents)
+        {
+            activeEvent.eventInstance.setParameterByName("Combat", 1);
+            Debug.Log("Combat entered");
+        }
     }
 
     public void CombatExit()
     {
+        enemiesTargetingPlayer--;
         if (enemiesTargetingPlayer < 1)
         {
-            RuntimeManager.StudioSystem.setParameterByName("Combat", 0);
+            foreach (EventInstances activeEvent in activeEvents)
+            {
+                activeEvent.eventInstance.setParameterByName("Combat", 0);
+                Debug.Log("Combat exited");
+            } 
         }
     }
     

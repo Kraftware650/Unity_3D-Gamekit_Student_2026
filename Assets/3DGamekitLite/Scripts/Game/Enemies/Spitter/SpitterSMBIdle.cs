@@ -10,6 +10,15 @@ namespace Gamekit3D
         public float maximumIdleGruntTime = 5.0f;
 
         protected float remainingToNextGrunt = 0.0f;
+        
+        private AudioManager audioManager;
+
+        private void Awake()
+        {
+            GameObject audioManagerGO = GameObject.FindWithTag("AudioManager");
+            audioManager = audioManagerGO.GetComponent<AudioManager>();
+        }
+
 
         public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
@@ -37,6 +46,7 @@ namespace Gamekit3D
 
             if (m_MonoBehaviour.target != null)
             {
+                audioManager.CombatEnter();
                 m_MonoBehaviour.TriggerAttack();
             }
         }

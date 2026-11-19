@@ -41,7 +41,7 @@ namespace Gamekit3D
         protected bool m_Fleeing = false;
 
         protected Vector3 m_RememberedTargetPosition;
-
+        
         protected void OnEnable()
         {
             m_Controller = GetComponentInChildren<EnemyController>();
